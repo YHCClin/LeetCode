@@ -3,91 +3,38 @@ using namespace std;
 
 //Definition for singly-linked list.
 struct ListNode {
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(NULL) {}
+	int val;
+	ListNode *next;
+	ListNode(int x) : val(x), next(NULL) {}
 };
-
-	inline int SumInIJ(vector<int>& nums,int i,int j)
-	{
-		int sum = 0;
-		if(i==j)
-			return nums[i];
-		else
-		{
-			for(;i <= j;++i)
-			{
-				if(nums[i]!=INT_MAX)
-					sum += nums[i];
-			}
-		}
-		return sum;
-	}
-	
-    ListNode* removeZeroSumSublists(ListNode* head) {
-    	vector<int> list_; 
-        ListNode *p = head;
-        while(p)
-        {
-        	list_.push_back(p->val);
-        	p = p -> next;
+ListNode* removeZeroSumSublists(ListNode* head) {
+		//建立前缀和与节点的映射
+        unordered_map<int, ListNode*> prefixSum;
+        // 因为头结点也有可能会被消掉，所以这里加一个虚拟节点作为头结点
+        ListNode* dummy = new ListNode(0), *p = dummy;
+        dummy->next = head;
+        
+        prefixSum[0] = p;
+        int cur = 0;
+        while (p = p->next) {
+            cur += p->val;
+            if (prefixSum.find(cur) != prefixSum.end()/*如果出现相同（之前出现过）的前缀和*/) {
+                prefixSum[cur]->next = p->next;       /*就让之前出现过的前缀和对应的节点的next指针指向当前节点的下一个节点*/
+            } else { /*否者，建立当前前缀和与节点的映射关系*/
+                prefixSum[cur] = p;
+            }
         }
-        int i = 0,j = 0;
-        while(i <= j && j < list_.size())
-        {
-        	if(j < list_.size() && list_[j]>0)
-        	{
-        		j++;
-        		if(j < list_.size() && SumInIJ(list_,i,j)==0)
-        		{
-        			while(i <= j)
-        			{
-        				list_[i] = INT_MAX;
-        				i++;
-        			}
-        			j = j+1;
-        			i = 0;
-        		}
-        	}
-        	else
-        	{
-        		i++;
-        		if(j < SumInIJ(list_,i,j)==0)
-        		{
-        			while(i <= j)
-        			{
-        				list_[i] = INT_MAX;
-        				i++;
-        			}
-        			j = j+1;
-        			i=0;
-        		}
-        	}
-        }
-        //建立链表
-        ListNode *h = new ListNode(0);
-        ListNode *tail = h;
-        for(int k = 0;k < list_.size();k++)
-        {
-        	if(list_[k] != INT_MAX)
-        	{
-        		ListNode *r = new ListNode(list_[k]);
-        		tail -> next = r;
-        		tail = tail -> next;
-        	}
-        }
-        return h->next;
+        
+        return dummy->next;//返回虚头节点的next指针（实际头节点）
     }
-
-
 
 int main()
 {
 	ListNode* head = new ListNode(1);
 	ListNode* head1 = new ListNode(2);
-	ListNode* head2 = new ListNode(3);
-	ListNode* head3 = new ListNode(-3);
-	ListNode* head4 = new ListNode(-2);
+	ListNode* head2 = new ListNode(-3);
+	ListNode* head3 = new ListNode(3);
+	ListNode* head4 = new ListNode(1);
 	//ListNode* head5 = new ListNode(1);
 
 	head -> next = head1;
