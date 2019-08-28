@@ -1,6 +1,5 @@
 #include "Include_all.h"
 using namespace std;
-
 int threeSumClosest(vector<int>& nums,int target)
 {
 	int res = nums[0]+nums[1]+nums[2] ,n = nums.size();

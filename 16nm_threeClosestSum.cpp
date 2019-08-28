@@ -1,5 +1,8 @@
 #include "Include_all.h"
 using namespace std;
+/*
+找出nums数组中与target最接近的三个数之和
+*/
 struct item{
 	int ab;
 	int idx;
