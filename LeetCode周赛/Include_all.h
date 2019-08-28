@@ -1,6 +1,7 @@
 #ifndef INCLUDE_ALL_H
 #define INCLUDE_ALL_H
 #include <iostream>
+#include <priority_queue>
 #include <string>
 #include <cmath>
 #include <vector>
