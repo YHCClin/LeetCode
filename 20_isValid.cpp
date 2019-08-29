@@ -4,6 +4,7 @@
 #include <unordered_map>
 using namespace std;
 
+//暨2019年北京工业大学研究生复试机试考题
 bool isValid(string s)
 {
 	unordered_map<char,char> set = {{')','('},{']','['},{'}','{'}};
