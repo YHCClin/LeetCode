@@ -10,7 +10,7 @@ struct Person{
 struct LessThanByAge{
 	bool operator()(const Person& a,const Person& b)
 	{
-		return a.age > b.age;//小顶堆(>),大顶堆(<)
+		return a.age < b.age;//小顶堆(>),大顶堆(<)
 	}
 };
 
