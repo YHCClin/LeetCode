@@ -1,37 +1,60 @@
 #include "Include_all.h"
 using namespace std;
 
-//暴力双指针法
-int findLength(vector<int>& A,vector<int>& B)
+int* get_next(int* p, int size)
 {
-	int a = 0,b = 0;
-	int length,max_len=0;
-	while(a < A.size())
+	int* next = (int*)malloc(sizeof(int) * size);
+	next[0] = -1;
+	for (int i = 0, j = -1; i < size;)
 	{
-		int i = a;
-		length = 0;
-		while( b < B.size() && i < A.size())
+		if (j == -1 || p[i] == p[j])
 		{
-			if(A[i] == B[b])
-			{
-				length++;
-				
-				i++;
-				b++;
-			}
-			else
-			{
-				if(length > max_len)
-					max_len = length;
-				length=0;
-				
-				b++;
-			}
+			++i;
+			++j;
+			if(i<size)next[i] = j;
 		}
-		a++;
+		else
+		{
+			j = next[j];
+		}
 	}
-	return max_len;
+	return next;
+}
+int kmp_len(int* t, int size, int* p, int s,int *len)
+{
+	int* next = get_next(p, s);
+	int i = 0, j = 0;
+	for (; i < size && j < s;)
+	{
+		if (j == -1||t[i]==p[j])++i, ++j;
+		else
+		{
+			if (j> * len)* len = j;
+			j = next[j];
+		}
+	}
+	free(next);
+	if (j > * len)* len = j;
+	if (j == s)
+	{
+		return i - j;
+	}
+	else
+	{
+		return -1;
+	}
+}
+int findLength(vector<int>& A, int ASize, vector<int>& B, int BSize)
+{
 
+	if (ASize == 0 || BSize == 0)return 0;
+	int res = 0;
+	for (int i = 0; i < ASize-res; ++i)
+	{
+		kmp_len(B, BSize, A + i, ASize - i, &res);
+	}
+
+	return res;
 }
 
 int main()
