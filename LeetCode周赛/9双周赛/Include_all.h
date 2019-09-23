@@ -10,6 +10,7 @@
 #include <limits>
 #include <algorithm>
 #include <list>
+#include <cstring>
 #include <queue>
 #include <deque>
 #include <stack>
