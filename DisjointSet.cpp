@@ -1,4 +1,4 @@
-#include "Include_all.h"
+#include <bits/stdc++.h>
 #define VERTS 6
 using namespace std;
 
