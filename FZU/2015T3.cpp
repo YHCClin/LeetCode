@@ -7,6 +7,7 @@ using namespace std;
 /*  求强连通分量： Tarjan算法
     Tarjan 算法， 以Robert Tarjan的名字命名的算法
     该算法用来在线性时间内求解图的连通性问题
+    算法详解： https://www.ccyh.xyz/2019/11/21/Tarjan算法求图的强连通分量/
 */
 
 class Ssc{
@@ -23,12 +24,12 @@ public:
     vector<vector<int>>   Sscs;     // 所有连通分量
     vector<vector<int>>  graph;     // 有向图的邻接矩阵
     int                      n;     // 顶点总数
-    vector<int>  dfn;               // 时间戳数组
-    vector<int>  low;               // 最小时间戳数组（能够追溯到的最早栈中节点时间戳）
-    vector<bool> scc;               // 在栈内标记数组
-    int         time,               // 时间
-              sscnum;               // 连通分量数
-    stack<int>           stk;       // 遍历栈
+    vector<int>            dfn;     // 时间戳数组
+    vector<int>            low;     // 最小时间戳数组（能够追溯到的最早栈中节点时间戳）
+    vector<bool>           scc;     // 在栈内标记数组
+    int                   time,     // 时间
+                        sscnum;     // 连通分量数
+    stack<int>             stk;     // 遍历栈
 };
 
 
