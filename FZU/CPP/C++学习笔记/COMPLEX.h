@@ -10,7 +10,7 @@
 typedef double T;
 class Complex{
 	friend bool operator==(const Complex& , const Complex& );
-	friend bool operator!=(const Complex& , const Complex&);
+	friend bool operator!=(const Complex& , const Complex& );
 	friend std::ostream& operator<<(std::ostream&,const Complex&);
 	friend std::istream& operator>>(std::istream&,Complex&);
 	public:
