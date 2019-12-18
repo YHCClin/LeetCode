@@ -16,6 +16,7 @@ class String{
 		~String(); // destructor
 
 		char* get_c_str() const {return m_data;} // 接口
+		char& operator[](int n);
 	private:
 		char* m_data;
 };
@@ -65,7 +66,19 @@ std::ostream& operator<<(std::ostream& os, const String& str)
 	os << str.get_c_str();
 	return os;
 }
-
+inline
+char& String::operator[](int n)
+		{
+			if(n >= 0 && n < strlen(m_data))
+			{
+				return m_data[n];
+			}
+			else
+			{
+				cerr << "Array Out of Bound." << endl;
+				exit();
+			}
+		}
 
 
 #endif
