@@ -4,6 +4,7 @@
 #include <map>
 #include <stack>
 using namespace std;
+
 // 结点定义
 struct TrieNode {
     char nodeChar;
