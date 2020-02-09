@@ -5,6 +5,7 @@
 using namespace std;
 #define KeyType int
 #define ValueType string
+
 class RBNode {
 
 	friend bool isRed(RBNode *node);
