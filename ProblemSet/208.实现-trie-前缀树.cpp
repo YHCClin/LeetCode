@@ -5,12 +5,14 @@
  */
 #include "Include_all.h"
 using namespace std;
+
 // @lc code=start
 struct TrieNode {
     bool isWord;
     TrieNode* childNode[26];
     TrieNode(bool f=false) : isWord(f) {memset(childNode,NULL,sizeof(childNode));}
 };
+
 class Trie {
 public:
     /** Initialize your data structure here. */
@@ -58,6 +60,22 @@ public:
         }
         return true;
     }
+    /** Delete word which in this trie. if not then return false. */
+    bool deleteWord(string word) {
+        TrieNode *cur = root;
+        for(int i = 0;i < word.size();++i) {
+            int ch = word[i] - 'a';
+            if(cur->childNode[ch] == NULL) {
+                return false;
+            }
+            else if(cur->childNode[ch] != NULL && cur->childNode[ch]->isWord && (i == word.size()-1)) {
+                cur->childNode[ch]->isWord = false;
+                return true;
+            }
+            cur = cur -> childNode[ch];
+        }
+        return false;
+    }
 };
 
 /**
@@ -75,4 +93,19 @@ public:
  * bool param_3 = obj->startsWith(prefix);
  */
 // @lc code=end
+
+int main () {
+    Trie tree;
+    vector<string> words = {"code","cook","five","file","fat","apple","app"};
+    for(const string& word : words) {
+        tree.insert(word);
+    }
+    cout << tree.search("fat") << endl;
+    cout << tree.search("five") << endl;
+    cout << tree.search("app") << endl;
+    cout << tree.search("apple") << endl;
+    cout << tree.deleteWord("apple") << endl;
+
+    return 0;
+}
 

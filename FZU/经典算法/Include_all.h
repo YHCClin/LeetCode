@@ -2,7 +2,6 @@
 #define INCLUDE_ALL_H
 #include <iostream>
 #include <string>
-#include <string.h>
 #include <cmath>
 #include <vector>
 #include <unordered_map>
