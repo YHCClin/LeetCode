@@ -3,42 +3,49 @@
 #include <string.h>
 #include <stdio.h>
 #include <cmath>
+#include <algorithm>
+
+using namespace std;
 
 typedef long long ll;
 
-ll solve(ll num){
-    ll ans = 0;
-    return ans;
+inline int count(ll num){
+    return floor(log10((double)num))+1;
 }
 
-int count(ll num){
-    int cnt = 0;
+bool allOne(ll num){
     while(num){
-        cnt ++;
+        if(num%10 != 1)
+            return false;
         num /= 10;
     }
-    return cnt;
+    return true;
 }
 
 ll generate(int n){
-    int ans = 0, q = 0;
+    int ans = 0;
     while(n--){
-        ans += pow(10,q++);
+        ans = ans * 10 + 1;
     }
     return ans;
 }
 
-ll dp[100005];
-
-ll dfs(int cur, int ans){
+ll dfs(ll cur){
     if(cur == 0) return 0;
-    if(cur == 11) return 2;
-    
+    if(allOne(abs(cur))) return count(abs(cur));
+    else{
+        int cnt = count(abs(cur));
+        ll gn = generate(cnt);
+        ll gnn = generate(cnt+1);
+        return abs(abs(cur)-gn) < abs(abs(cur)-gnn) ? cnt+dfs(abs(cur)-gn) : cnt+1+dfs(abs(cur)-gnn);
+    }
 }
 
+
 int main() {
-    ll num;
+    
+    ll num = 0;
     scanf("%lld", &num);
-    printf("%lld\n", solve(num));
+    printf("%lld\n", dfs(num));
     return 0;
 }
