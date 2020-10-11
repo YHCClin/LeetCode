@@ -19,9 +19,12 @@ bool judge(LL n){
 
 int main (){
     LL num, ans = 0;
-    scanf("%lld", &num);
-    for(int i = 1;i <= num;i++){
-        if(judge(i)) ans++;
+    while(1){
+        ans = 0;
+        scanf("%lld", &num);
+        for(int i = 1;i <= num;i++){
+            if(judge(i)) ans++;
+        }
+        printf("%lld\n",ans);
     }
-    printf("%lld\n",ans);
 }
