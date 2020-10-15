@@ -1,35 +1,38 @@
-#include <cstdio>
-#include <cstring>
-#include <algorithm>
+#include <bits/stdc++.h> 
+#define M 305
+
 using namespace std;
-int n,m,f[2005][2005];
-int head[2005],next[2005],w[2005];
-int dfs(int x){
-    if (head[x]==-1) return 0;
-    int sum=0;
-    for (int i=head[x];i!=-1;i=next[i]){
-        int t=dfs(i);
-        sum+=t+1;
-        for (int j=sum;j>=0;j--){//注意，一定要是降序
-            for (int k=0;k<=t;k++)
-                if (j-k-1>=0) f[x][j]=max(f[x][j],f[x][j-k-1]+f[i][k]);
-        }
+
+// 树型dp结合背包
+int n,m,x; 
+int dp[M][M];// dp[x][j] 表示以x为根的子树中选择j件商品所能获得的最大价值 
+int son[M][M],cnt[M],v[M];// cnt[x] 表示课程x的儿子数 , v[x] 表示第x件商品的价值 
+
+
+void dfs(int x){
+    dp[x][0]=0;
+    int p=cnt[x];
+    for(int i=0;i<p;i++){//先算出不加上第x件商品的价值 
+        int k=son[x][i];
+        dfs(k);
+        for(int t=m;t>=0;t--)//背包倒序循环
+            for(int l=t;l>=0;l--)
+                dp[x][t]=max(dp[x][t],dp[x][t-l]+dp[k][l]);
     }
-    return sum;
+    if(x!=0)//如果不为0节点，也就是整颗树的根节点，那么还要加上这件商品的价值 
+        for(int i=m;i>0;i--)
+            dp[x][i]=dp[x][i-1]+v[x];
 }
+
+
 int main(){
-    scanf("%d%d",&n,&m);
-    memset(f,0,sizeof(f));
-    memset(head,-1,sizeof(head));
-    for (int i=1;i<=n;i++){
-        int a;
-        scanf("%d%d",&a,&w[i]);
-        next[i]=head[a];
-        head[a]=i;
+    memset(dp,-1,sizeof(dp));
+    scanf("%d %d",&n,&m);
+    for(int i=1;i<=n;i++){
+        scanf("%d %d",&x,&v[i]);
+        son[x][cnt[x]++]=i;		//存x的儿子节点
     }
-    for (int i=1;i<=n;i++) f[i][0]=w[i];
-    f[0][0]=0;
-    dfs(0);
-    printf("%d",f[0][m]);
+    dfs(0);// 从根节点开始 
+    printf("%d\n",dp[0][m]);
     return 0;
 }
